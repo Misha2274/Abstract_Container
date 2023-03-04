@@ -24,6 +24,15 @@ LimitedArrayStack::LimitedArrayStack(const LimitedArrayStack& other) : capacity_
 		arr_[i] = other.arr_[i];
 	}
 }
+LimitedArrayStack::LimitedArrayStack(LimitedArrayStack&& other) noexcept
+{
+	arr_ = other.arr_;
+	size_ = other.size_;
+	capacity_ = other.capacity_;
+	other.arr_ = nullptr;
+	other.size_ = NULL;
+	other.capacity_ = NULL;
+}
 LimitedArrayStack& LimitedArrayStack::operator= (const LimitedArrayStack& other)
 {
 	if (this != &other)
@@ -36,6 +45,18 @@ LimitedArrayStack& LimitedArrayStack::operator= (const LimitedArrayStack& other)
 		{
 			arr_[i] = other.arr_[i];
 		}
+	}
+	return *this;
+}
+LimitedArrayStack& LimitedArrayStack::operator= (LimitedArrayStack&& other) noexcept
+{
+	if (this != &other)
+	{
+		delete[] arr_;
+		arr_ = other.arr_;
+		size_ = other.size_;
+		other.arr_ = nullptr;
+		other.size_ = NULL;
 	}
 	return *this;
 }
@@ -109,11 +130,24 @@ UnlimitedArrayStack::UnlimitedArrayStack(const UnlimitedArrayStack& other)
 {
 	arr_ = other.arr_;
 }
+UnlimitedArrayStack::UnlimitedArrayStack(UnlimitedArrayStack&& other) noexcept
+{
+	swap(arr_, other.arr_);
+}
 UnlimitedArrayStack& UnlimitedArrayStack::operator= (const UnlimitedArrayStack& other)
 {
 	if (this != &other)
 	{
 		arr_ = other.arr_;
+	}
+	return *this;
+}
+UnlimitedArrayStack& UnlimitedArrayStack::operator= (UnlimitedArrayStack&& other) noexcept
+{
+	if (this != &other)
+	{
+		arr_.clear();
+		swap(arr_, other.arr_);
 	}
 	return *this;
 }
@@ -208,6 +242,11 @@ ListStack::ListStack(const ListStack& other)
 		head_ = nullptr;
 	}
 }
+ListStack::ListStack(ListStack&& other) noexcept
+{
+	head_ = other.head_;
+	other.head_ = nullptr;
+}
 ListStack& ListStack::operator= (const ListStack& other)
 {
 	if (this != &other)
@@ -226,6 +265,19 @@ ListStack& ListStack::operator= (const ListStack& other)
 				i->next = new ForwardNode(j->next->data);
 			}
 		}
+	}
+	return *this;
+}
+ListStack& ListStack::operator= (ListStack&& other) noexcept
+{
+	if (this != &other)
+	{
+		while (!IsEmpty())
+		{
+			Pop();
+		}
+		head_ = other.head_;
+		other.head_ = nullptr;
 	}
 	return *this;
 }
@@ -310,6 +362,16 @@ LimitedArrayQueue::LimitedArrayQueue(const LimitedArrayQueue& other) : capacity_
 		}
 	}
 }
+LimitedArrayQueue::LimitedArrayQueue(LimitedArrayQueue&& other) noexcept
+{
+	swap(arr_, other.arr_);
+	capacity_ = other.capacity_;
+	other.capacity_ = NULL;
+	size_ = other.size_;
+	other.size_ = NULL;
+	shift_ = other.shift_;
+	other.shift_ = NULL;
+}
 LimitedArrayQueue& LimitedArrayQueue::operator= (const LimitedArrayQueue& other)
 {
 	if (this != &other)
@@ -325,6 +387,21 @@ LimitedArrayQueue& LimitedArrayQueue::operator= (const LimitedArrayQueue& other)
 				arr_[i % capacity_] = other.arr_[i + shift_ % capacity_];
 			}
 		}
+	}
+	return *this;
+}
+LimitedArrayQueue& LimitedArrayQueue::operator= (LimitedArrayQueue&& other) noexcept
+{
+	if (this != &other)
+	{
+		arr_.clear();
+		swap(arr_, other.arr_);
+		capacity_ = other.capacity_;
+		size_ = other.size_;
+		shift_ = other.shift_;
+		other.capacity_ = NULL;
+		other.size_ = NULL;
+		other.shift_ = NULL;
 	}
 	return *this;
 }
@@ -460,6 +537,13 @@ ListQueue::ListQueue(const ListQueue& other)
 		tail_ = nullptr;
 	}
 }
+ListQueue::ListQueue(ListQueue&& other) noexcept
+{
+	head_ = other.head_;
+	other.head_ = nullptr;
+	tail_ = other.tail_;
+	other.tail_ = nullptr;
+}
 ListQueue& ListQueue::operator= (const ListQueue& other)
 {
 	if (this != &other)
@@ -480,6 +564,23 @@ ListQueue& ListQueue::operator= (const ListQueue& other)
 				tail_ = i->next;
 			}
 		}
+	}
+	return *this;
+}
+ListQueue& ListQueue::operator= (ListQueue&& other) noexcept
+{
+	if (this != &other)
+	{
+		while (!IsEmpty())
+		{
+			PopFront();
+			head_ = nullptr;
+			tail_ = nullptr;
+		}
+		head_ = other.head_;
+		tail_ = other.tail_;
+		other.head_ = nullptr;
+		other.tail_ = nullptr;
 	}
 	return *this;
 }

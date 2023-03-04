@@ -42,7 +42,9 @@ public:
 	LimitedArrayStack(const int size);
 	LimitedArrayStack(const int size, const int value);
 	LimitedArrayStack(const LimitedArrayStack& other);
+	LimitedArrayStack(LimitedArrayStack&& other) noexcept;
 	LimitedArrayStack& operator= (const LimitedArrayStack& other);
+	LimitedArrayStack& operator= (LimitedArrayStack&& other) noexcept;
 	~LimitedArrayStack();
 	bool IsEmpty() const override;
 	int Size() const override;
@@ -65,7 +67,9 @@ public:
 	UnlimitedArrayStack(const int size);
 	UnlimitedArrayStack(const int size, const int value);
 	UnlimitedArrayStack(const UnlimitedArrayStack& other);
+	UnlimitedArrayStack(UnlimitedArrayStack&& other) noexcept;
 	UnlimitedArrayStack& operator= (const UnlimitedArrayStack& other);
+	UnlimitedArrayStack& operator= (UnlimitedArrayStack&& other) noexcept;
 	~UnlimitedArrayStack();
 	bool IsEmpty() const override;
 	int Size() const override;
@@ -98,7 +102,9 @@ public:
 	ListStack(int size);
 	ListStack(int size, int value);
 	ListStack(const ListStack& other);
+	ListStack(ListStack&& other) noexcept;
 	ListStack& operator= (const ListStack& other);
+	ListStack& operator= (ListStack&& other) noexcept;
 	~ListStack();
 	bool IsEmpty() const override;
 	int Size() const override;
@@ -134,7 +140,9 @@ public:
 	LimitedArrayQueue(const int size);
 	LimitedArrayQueue(const int size, const int value);
 	LimitedArrayQueue(const LimitedArrayQueue& other);
+	LimitedArrayQueue(LimitedArrayQueue&& other) noexcept;
 	LimitedArrayQueue& operator= (const LimitedArrayQueue& other);
+	LimitedArrayQueue& operator= (LimitedArrayQueue&& other) noexcept;
 	~LimitedArrayQueue();
 	bool IsEmpty() const override;
 	int Size() const override;
@@ -168,7 +176,9 @@ public:
 	ListQueue(int size);
 	ListQueue(int size, int value);
 	ListQueue(const ListQueue& other);
+	ListQueue(ListQueue&& other) noexcept;
 	ListQueue& operator= (const ListQueue& other);
+	ListQueue& operator= (ListQueue&& other) noexcept;
 	~ListQueue();
 	bool IsEmpty() const override;
 	int Size() const override;

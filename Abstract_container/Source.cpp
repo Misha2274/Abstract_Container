@@ -35,5 +35,76 @@ int main()
 		cout << C.Front() << ' ';
 		C.PopFront();
 	}
+	cout << "\n";
+	LimitedArrayStack a = LimitedArrayStack(5, 5);
+	LimitedArrayStack a2 = move(a);
+	while (!a.IsEmpty())
+	{
+		cout << a.Top() << " ";
+		a.Pop();
+	}
+	cout << "\n";
+	while (!a2.IsEmpty())
+	{
+		cout << a2.Top() << " ";
+		a2.Pop();
+	}
+	cout << "\n";
+	LimitedArrayQueue b = LimitedArrayQueue(5, 7);
+	LimitedArrayQueue b2 = move(b);
+	while (!b.IsEmpty())
+	{
+		cout << b.Front() << " ";
+		b.PopFront();
+	}
+	cout << "\n";
+	while (!b2.IsEmpty())
+	{
+		cout << b2.Front() << " ";
+		b2.PopFront();
+	}
+	cout << "\n";
+	UnlimitedArrayStack c = UnlimitedArrayStack(5, 8);
+	UnlimitedArrayStack c2 = move(c);
+	while (!c.IsEmpty())
+	{
+		cout << c.Top() << " ";
+		c.Pop();
+	}
+	cout << "\n";
+	while (!c2.IsEmpty())
+	{
+		cout << c2.Top() << " ";
+		c2.Pop();
+	}
+	cout << "\n";
+	ListStack d = ListStack(5, 9);
+	ListStack d2 = move(d);
+	while (!d.IsEmpty())
+	{
+		cout << d.Top() << " ";
+		d.Pop();
+	}
+	cout << "\n";
+	while (!d2.IsEmpty())
+	{
+		cout << d2.Top() << " ";
+		d2.Pop();
+	}
+	cout << "\n";
+	ListQueue e = ListQueue(5, 6);
+	ListQueue e2 = move(e);
+	while (!e.IsEmpty())
+	{
+		cout << e.Front() << " ";
+		e.PopFront();
+	}
+	cout << "\n";
+	while (!e2.IsEmpty())
+	{
+		cout << e2.Front() << " ";
+		e2.PopFront();
+	}
+	cout << "\n";
 	return 0;
 }
