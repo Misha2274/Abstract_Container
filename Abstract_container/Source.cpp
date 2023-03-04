@@ -78,11 +78,11 @@ public:
 	{
 		delete[] arr_;
 	}
-	bool IsEmpty() const
+	bool IsEmpty() const override
 	{
 		return size_ == 0;
 	}
-	int Size() const
+	int Size() const override
 	{
 		return size_;
 	}
@@ -97,7 +97,7 @@ public:
 		delete[] arr_;
 		arr_ = arr;
 	}
-	void PushBack(const int value)
+	void Push(const int value) override
 	{
 		if (size_ == capacity_)
 		{
@@ -106,7 +106,7 @@ public:
 		arr_[size_] = value;
 		size_++;
 	}
-	void Pop()
+	void Pop() override
 	{
 		if (IsEmpty())
 		{
@@ -114,7 +114,7 @@ public:
 		}
 		size_--;
 	}
-	int Top() const
+	int Top() const override
 	{
 		if (IsEmpty())
 		{
@@ -122,7 +122,7 @@ public:
 		}
 		return arr_[size_ - 1];
 	}
-	int& Top()
+	int& Top() override
 	{
 		if (IsEmpty())
 		{
@@ -161,11 +161,11 @@ public:
 		return *this;
 	}
 	~UnlimitedArrayStack(){};
-	bool IsEmpty() const
+	bool IsEmpty() const override
 	{
 		return arr_.size() == 0;
 	}
-	int Size() const
+	int Size() const override
 	{
 		return arr_.size();
 	}
@@ -173,11 +173,11 @@ public:
 	{
 		arr_.resize(size);
 	}
-	void Push(const int value)
+	void Push(const int value) override
 	{
 		arr_.push_back(value);
 	}
-	void Pop()
+	void Pop() override
 	{
 		if (IsEmpty())
 		{
@@ -185,7 +185,7 @@ public:
 		}
 		arr_.pop_back();
 	}
-	int Top() const
+	int Top() const override
 	{
 		if (IsEmpty())
 		{
@@ -193,7 +193,7 @@ public:
 		}
 		return arr_[arr_.size() - 1];
 	}
-	int& Top()
+	int& Top() override
 	{
 		if (IsEmpty())
 		{
@@ -292,11 +292,11 @@ public:
 			Pop();
 		}
 	}
-	bool IsEmpty() const
+	bool IsEmpty() const override
 	{
 		return head_ == nullptr;
 	}
-	int Size() const
+	int Size() const override
 	{
 		if (IsEmpty())
 			return 0;
@@ -304,7 +304,7 @@ public:
 		for (auto i = head_; i->next != nullptr; i = i->next, size++);
 		return size;
 	}
-	void Push(const int value)
+	void Push(const int value) override
 	{
 		if (IsEmpty())
 		{
@@ -315,7 +315,7 @@ public:
 		push->next = head_;
 		head_ = push;
 	}
-	void Pop()
+	void Pop() override
 	{
 		if (IsEmpty())
 		{
@@ -325,7 +325,7 @@ public:
 		head_ = head_->next;
 		delete pop;
 	}
-	int Top() const
+	int Top() const override
 	{
 		if (IsEmpty())
 		{
@@ -333,7 +333,7 @@ public:
 		}
 		return head_->data;
 	}
-	int& Top()
+	int& Top() override
 	{
 		if (IsEmpty())
 		{
@@ -407,11 +407,11 @@ public:
 		return *this;
 	}
 	~LimitedArrayQueue() {};
-	bool IsEmpty() const
+	bool IsEmpty() const override
 	{
 		return size_ == 0;
 	}
-	int Size() const
+	int Size() const override
 	{
 		return size_;
 	}
@@ -446,12 +446,12 @@ public:
 		capacity_ = size;
 		arr_.resize(capacity_);
 	}
-	void PushBack(const int value)
+	void PushBack(const int value) override
 	{
 		arr_[size_ + shift_] = value;
 		size_++;
 	}
-	void PopFront()
+	void PopFront() override
 	{
 		if (IsEmpty())
 		{
@@ -460,7 +460,7 @@ public:
 		size_--;
 		shift_++;
 	}
-	int Front() const
+	int Front() const override
 	{
 		if (IsEmpty())
 		{
@@ -468,7 +468,7 @@ public:
 		}
 		return arr_[shift_ % capacity_];
 	}
-	int& Front()
+	int& Front() override
 	{
 		if (IsEmpty())
 		{
@@ -581,11 +581,11 @@ public:
 			PopFront();
 		}
 	}
-	bool IsEmpty() const
+	bool IsEmpty() const override
 	{
 		return head_ == nullptr;
 	}
-	int Size() const
+	int Size() const override
 	{
 		if (IsEmpty())
 			return 0;
@@ -593,7 +593,7 @@ public:
 		for (auto i = head_; i != tail_; i = i->next, size++);
 		return size;
 	}
-	void PushBack(const int value)
+	void PushBack(const int value) override
 	{
 		if (IsEmpty())
 		{
@@ -606,7 +606,7 @@ public:
 		tail_->next = push;
 		tail_ = push;
 	}
-	void PopFront()
+	void PopFront() override
 	{
 		if (IsEmpty())
 		{
@@ -616,7 +616,7 @@ public:
 		head_ = head_->next;
 		delete pop;
 	}
-	int Front() const
+	int Front() const override
 	{
 		if (IsEmpty())
 		{
@@ -624,7 +624,7 @@ public:
 		}
 		return head_->data;
 	}
-	int& Front()
+	int& Front() override
 	{
 		if (IsEmpty())
 		{
