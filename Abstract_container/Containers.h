@@ -100,7 +100,7 @@ template <typename T>
 class ListStack : public AbstractStack<T>
 {
 
-	ForwardNode* head_;
+	ForwardNode<T>* head_;
 
 public:
 
@@ -178,7 +178,7 @@ template <typename T>
 class ListQueue : public AbstractQueue<T>
 {
 
-	Node* head_, * tail_;
+	Node<T>* head_, * tail_;
 
 public:
 

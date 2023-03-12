@@ -235,10 +235,10 @@ ListStack<T>::ListStack(int size)
 {
 	if (size != 0)
 	{
-		head_ = new ForwardNode;
+		head_ = new ForwardNode<T>;
 		for (auto i = head_; (size - 1); size--, i = i->next)
 		{
-			i->next = new ForwardNode;
+			i->next = new ForwardNode<T>;
 		}
 	}
 	else
@@ -251,10 +251,10 @@ ListStack<T>::ListStack(int size, T value)
 {
 	if (size != 0)
 	{
-		head_ = new ForwardNode(value);
+		head_ = new ForwardNode<T>(value);
 		for (auto i = head_; (size - 1); size--, i = i->next)
 		{
-			i->next = new ForwardNode(value);
+			i->next = new ForwardNode<T>(value);
 		}
 	}
 	else
@@ -350,7 +350,7 @@ void ListStack<T>::Push(const T value)
 		head_ = new ForwardNode<T>(value);
 		return;
 	}
-	ForwardNode* push = new ForwardNode<T>(value);
+	ForwardNode<T>* push = new ForwardNode<T>(value);
 	push->next = head_;
 	head_ = push;
 }
@@ -361,7 +361,7 @@ void ListStack<T>::Pop()
 	{
 		throw runtime_error("Out_of_range");
 	}
-	ForwardNode* pop = head_;
+	ForwardNode<T>* pop = head_;
 	head_ = head_->next;
 	delete pop;
 }
@@ -686,7 +686,7 @@ void ListQueue<T>::PushBack(const T value)
 		head_ = tail_;
 		return;
 	}
-	Node* push = new Node<T>(value);
+	Node<T>* push = new Node<T>(value);
 	push->previous = tail_;
 	tail_->next = push;
 	tail_ = push;
@@ -698,7 +698,7 @@ void ListQueue<T>::PopFront()
 	{
 		throw runtime_error("Out_of_range");
 	}
-	Node* pop = head_;
+	Node<T>* pop = head_;
 	head_ = head_->next;
 	delete pop;
 }

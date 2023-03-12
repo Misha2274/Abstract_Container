@@ -106,5 +106,18 @@ int main()
 		e2.PopFront();
 	}
 	cout << "\n";
+	ListQueue<float> P(2, 5.5);
+	AbstractContainer<float>* R = &P;
+	ListQueue<float> T(P);
+	T.PushBack(30.54);
+	T.PushBack(3.545);
+	T.PushBack(4.5555);
+	T.PushBack(1.1);
+	cout << T.Size() << "\n";
+	while (!T.IsEmpty())
+	{
+		cout << T.Front() << ' ';
+		T.PopFront();
+	}
 	return 0;
 }
