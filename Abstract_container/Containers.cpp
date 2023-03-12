@@ -1,30 +1,35 @@
 #include "Containers.h"
 
-LimitedArrayStack::LimitedArrayStack() : capacity_(5000), size_(0)
+template <typename T>
+LimitedArrayStack<T>::LimitedArrayStack() : capacity_(5000), size_(0)
 {
-	arr_ = new int[capacity_];
+	arr_ = new T[capacity_];
 }
-LimitedArrayStack::LimitedArrayStack(const int size) : capacity_(size), size_(0)
+template <typename T>
+LimitedArrayStack<T>::LimitedArrayStack(const int size) : capacity_(size), size_(0)
 {
-	arr_ = new int[capacity_];
+	arr_ = new T[capacity_];
 }
-LimitedArrayStack::LimitedArrayStack(const int size, const int value) : capacity_(size), size_(size)
+template <typename T>
+LimitedArrayStack<T>::LimitedArrayStack(const int size, const T value) : capacity_(size), size_(size)
 {
-	arr_ = new int[capacity_];
+	arr_ = new T[capacity_];
 	for (int i = 0; i < capacity_; i++)
 	{
 		arr_[i] = value;
 	}
 }
-LimitedArrayStack::LimitedArrayStack(const LimitedArrayStack& other) : capacity_(other.capacity_), size_(other.size_)
+template <typename T>
+LimitedArrayStack<T>::LimitedArrayStack(const LimitedArrayStack<T>& other) : capacity_(other.capacity_), size_(other.size_)
 {
-	arr_ = new int[capacity_];
+	arr_ = new T[capacity_];
 	for (int i = 0; i < size_; i++)
 	{
 		arr_[i] = other.arr_[i];
 	}
 }
-LimitedArrayStack::LimitedArrayStack(LimitedArrayStack&& other) noexcept
+template <typename T>
+LimitedArrayStack<T>::LimitedArrayStack(LimitedArrayStack<T>&& other) noexcept
 {
 	arr_ = other.arr_;
 	size_ = other.size_;
@@ -33,12 +38,13 @@ LimitedArrayStack::LimitedArrayStack(LimitedArrayStack&& other) noexcept
 	other.size_ = NULL;
 	other.capacity_ = NULL;
 }
-LimitedArrayStack& LimitedArrayStack::operator= (const LimitedArrayStack& other)
+template <typename T>
+LimitedArrayStack<T>& LimitedArrayStack<T>::operator= (const LimitedArrayStack<T>& other)
 {
 	if (this != &other)
 	{
 		delete[] arr_;
-		arr_ = new int[other.capacity_];
+		arr_ = new T[other.capacity_];
 		capacity_ = other.capacity_;
 		size_ = other.size_;
 		for (int i = 0; i < other.size_; i++)
@@ -48,7 +54,8 @@ LimitedArrayStack& LimitedArrayStack::operator= (const LimitedArrayStack& other)
 	}
 	return *this;
 }
-LimitedArrayStack& LimitedArrayStack::operator= (LimitedArrayStack&& other) noexcept
+template <typename T>
+LimitedArrayStack<T>& LimitedArrayStack<T>::operator= (LimitedArrayStack<T>&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -60,21 +67,25 @@ LimitedArrayStack& LimitedArrayStack::operator= (LimitedArrayStack&& other) noex
 	}
 	return *this;
 }
-LimitedArrayStack::~LimitedArrayStack()
+template <typename T>
+LimitedArrayStack<T>::~LimitedArrayStack()
 {
 	delete[] arr_;
 }
-bool LimitedArrayStack::IsEmpty() const
+template <typename T>
+bool LimitedArrayStack<T>::IsEmpty() const
 {
 	return size_ == 0;
 }
-int LimitedArrayStack::Size() const
+template <typename T>
+int LimitedArrayStack<T>::Size() const
 {
 	return size_;
 }
-void LimitedArrayStack::Resize(int size)
+template <typename T>
+void LimitedArrayStack<T>::Resize(int size)
 {
-	int* arr = new int[size];
+	int* arr = new T[size];
 	for (int i = 0; i < min(size_, size); i++)
 	{
 		arr[i] = arr_[i];
@@ -83,7 +94,8 @@ void LimitedArrayStack::Resize(int size)
 	delete[] arr_;
 	arr_ = arr;
 }
-void LimitedArrayStack::Push(const int value)
+template <typename T>
+void LimitedArrayStack<T>::Push(const T value)
 {
 	if (size_ == capacity_)
 	{
@@ -92,7 +104,8 @@ void LimitedArrayStack::Push(const int value)
 	arr_[size_] = value;
 	size_++;
 }
-void LimitedArrayStack::Pop()
+template <typename T>
+void LimitedArrayStack<T>::Pop()
 {
 	if (IsEmpty())
 	{
@@ -100,7 +113,8 @@ void LimitedArrayStack::Pop()
 	}
 	size_--;
 }
-int LimitedArrayStack::Top() const
+template <typename T>
+T LimitedArrayStack<T>::Top() const
 {
 	if (IsEmpty())
 	{
@@ -108,7 +122,8 @@ int LimitedArrayStack::Top() const
 	}
 	return arr_[size_ - 1];
 }
-int& LimitedArrayStack::Top()
+template <typename T>
+T& LimitedArrayStack<T>::Top()
 {
 	if (IsEmpty())
 	{
@@ -117,24 +132,30 @@ int& LimitedArrayStack::Top()
 	return arr_[size_ - 1];
 }
 
-UnlimitedArrayStack::UnlimitedArrayStack() {}
-UnlimitedArrayStack::UnlimitedArrayStack(const int size)
+template <typename T>
+UnlimitedArrayStack<T>::UnlimitedArrayStack() {}
+template <typename T>
+UnlimitedArrayStack<T>::UnlimitedArrayStack(const int size)
 {
-	arr_.resize(size, 0);
+	arr_.resize(size, T(0));
 }
-UnlimitedArrayStack::UnlimitedArrayStack(const int size, const int value)
+template <typename T>
+UnlimitedArrayStack<T>::UnlimitedArrayStack(const int size, const T value)
 {
 	arr_.resize(size, value);
 }
-UnlimitedArrayStack::UnlimitedArrayStack(const UnlimitedArrayStack& other)
+template <typename T>
+UnlimitedArrayStack<T>::UnlimitedArrayStack(const UnlimitedArrayStack<T>& other)
 {
 	arr_ = other.arr_;
 }
-UnlimitedArrayStack::UnlimitedArrayStack(UnlimitedArrayStack&& other) noexcept
+template <typename T>
+UnlimitedArrayStack<T>::UnlimitedArrayStack(UnlimitedArrayStack<T>&& other) noexcept
 {
 	swap(arr_, other.arr_);
 }
-UnlimitedArrayStack& UnlimitedArrayStack::operator= (const UnlimitedArrayStack& other)
+template <typename T>
+UnlimitedArrayStack<T>& UnlimitedArrayStack<T>::operator= (const UnlimitedArrayStack<T>& other)
 {
 	if (this != &other)
 	{
@@ -142,7 +163,8 @@ UnlimitedArrayStack& UnlimitedArrayStack::operator= (const UnlimitedArrayStack& 
 	}
 	return *this;
 }
-UnlimitedArrayStack& UnlimitedArrayStack::operator= (UnlimitedArrayStack&& other) noexcept
+template <typename T>
+UnlimitedArrayStack<T>& UnlimitedArrayStack<T>::operator= (UnlimitedArrayStack<T>&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -151,24 +173,30 @@ UnlimitedArrayStack& UnlimitedArrayStack::operator= (UnlimitedArrayStack&& other
 	}
 	return *this;
 }
-UnlimitedArrayStack::~UnlimitedArrayStack() {};
-bool UnlimitedArrayStack::IsEmpty() const
+template <typename T>
+UnlimitedArrayStack<T>::~UnlimitedArrayStack() {};
+template <typename T>
+bool UnlimitedArrayStack<T>::IsEmpty() const
 {
 	return arr_.size() == 0;
 }
-int UnlimitedArrayStack::Size() const
+template <typename T>
+int UnlimitedArrayStack<T>::Size() const
 {
 	return arr_.size();
 }
-void UnlimitedArrayStack::Resize(int size)
+template <typename T>
+void UnlimitedArrayStack<T>::Resize(int size)
 {
 	arr_.resize(size);
 }
-void UnlimitedArrayStack::Push(const int value) 
+template <typename T>
+void UnlimitedArrayStack<T>::Push(const T value) 
 {
 	arr_.push_back(value);
 }
-void UnlimitedArrayStack::Pop() 
+template <typename T>
+void UnlimitedArrayStack<T>::Pop() 
 {
 	if (IsEmpty())
 	{
@@ -176,7 +204,8 @@ void UnlimitedArrayStack::Pop()
 	}
 	arr_.pop_back();
 }
-int UnlimitedArrayStack::Top() const
+template <typename T>
+T UnlimitedArrayStack<T>::Top() const
 {
 	if (IsEmpty())
 	{
@@ -184,7 +213,8 @@ int UnlimitedArrayStack::Top() const
 	}
 	return arr_[arr_.size() - 1];
 }
-int& UnlimitedArrayStack::Top()
+template <typename T>
+T& UnlimitedArrayStack<T>::Top()
 {
 	if (IsEmpty())
 	{
@@ -193,11 +223,15 @@ int& UnlimitedArrayStack::Top()
 	return arr_[arr_.size() - 1];
 }
 
-ForwardNode::ForwardNode() : data(0), next(nullptr) {}
-ForwardNode::ForwardNode(const int value) : data(value), next(nullptr) {}
+template <typename T>
+ForwardNode<T>::ForwardNode() : data(T(0)), next(nullptr) {}
+template <typename T>
+ForwardNode<T>::ForwardNode(const T value) : data(value), next(nullptr) {}
 
-ListStack::ListStack() : head_(nullptr) {}
-ListStack::ListStack(int size)
+template <typename T>
+ListStack<T>::ListStack() : head_(nullptr) {}
+template <typename T>
+ListStack<T>::ListStack(int size)
 {
 	if (size != 0)
 	{
@@ -212,7 +246,8 @@ ListStack::ListStack(int size)
 		head_ = nullptr;
 	}
 }
-ListStack::ListStack(int size, int value)
+template <typename T>
+ListStack<T>::ListStack(int size, T value)
 {
 	if (size != 0)
 	{
@@ -227,11 +262,12 @@ ListStack::ListStack(int size, int value)
 		head_ = nullptr;
 	}
 }
-ListStack::ListStack(const ListStack& other)
+template <typename T>
+ListStack<T>::ListStack(const ListStack<T>& other)
 {
 	if (!other.IsEmpty())
 	{
-		head_ = new ForwardNode(other.Top());
+		head_ = new ForwardNode<T>(other.Top());
 		for (auto i = head_, j = other.head_; j->next != nullptr; i = i->next, j = j->next)
 		{
 			i->next = new ForwardNode(j->next->data);
@@ -242,12 +278,14 @@ ListStack::ListStack(const ListStack& other)
 		head_ = nullptr;
 	}
 }
-ListStack::ListStack(ListStack&& other) noexcept
+template <typename T>
+ListStack<T>::ListStack(ListStack<T>&& other) noexcept
 {
 	head_ = other.head_;
 	other.head_ = nullptr;
 }
-ListStack& ListStack::operator= (const ListStack& other)
+template <typename T>
+ListStack<T>& ListStack<T>::operator= (const ListStack<T>& other)
 {
 	if (this != &other)
 	{
@@ -258,17 +296,18 @@ ListStack& ListStack::operator= (const ListStack& other)
 		head_ = nullptr;
 		if (!other.IsEmpty())
 		{
-			head_ = new ForwardNode;
+			head_ = new ForwardNode<T>;
 			head_->data = other.Top();
 			for (auto i = head_, j = other.head_; j->next != nullptr; i = i->next, j = j->next)
 			{
-				i->next = new ForwardNode(j->next->data);
+				i->next = new ForwardNode<T>(j->next->data);
 			}
 		}
 	}
 	return *this;
 }
-ListStack& ListStack::operator= (ListStack&& other) noexcept
+template <typename T>
+ListStack<T>& ListStack<T>::operator= (ListStack<T>&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -281,18 +320,21 @@ ListStack& ListStack::operator= (ListStack&& other) noexcept
 	}
 	return *this;
 }
-ListStack::~ListStack()
+template <typename T>
+ListStack<T>::~ListStack<T>()
 {
 	while (!IsEmpty())
 	{
 		Pop();
 	}
 }
-bool ListStack::IsEmpty() const 
+template <typename T>
+bool ListStack<T>::IsEmpty() const 
 {
 	return head_ == nullptr;
 }
-int ListStack::Size() const 
+template <typename T>
+int ListStack<T>::Size() const 
 {
 	if (IsEmpty())
 		return 0;
@@ -300,18 +342,20 @@ int ListStack::Size() const
 	for (auto i = head_; i->next != nullptr; i = i->next, size++);
 	return size;
 }
-void ListStack::Push(const int value) 
+template <typename T>
+void ListStack<T>::Push(const T value) 
 {
 	if (IsEmpty())
 	{
-		head_ = new ForwardNode(value);
+		head_ = new ForwardNode<T>(value);
 		return;
 	}
-	ForwardNode* push = new ForwardNode(value);
+	ForwardNode* push = new ForwardNode<T>(value);
 	push->next = head_;
 	head_ = push;
 }
-void ListStack::Pop() 
+template <typename T>
+void ListStack<T>::Pop() 
 {
 	if (IsEmpty())
 	{
@@ -321,7 +365,8 @@ void ListStack::Pop()
 	head_ = head_->next;
 	delete pop;
 }
-int ListStack::Top() const 
+template <typename T>
+T ListStack<T>::Top() const 
 {
 	if (IsEmpty())
 	{
@@ -329,7 +374,8 @@ int ListStack::Top() const
 	}
 	return head_->data;
 }
-int& ListStack::Top() 
+template <typename T>
+T& ListStack<T>::Top() 
 {
 	if (IsEmpty())
 	{
@@ -338,19 +384,23 @@ int& ListStack::Top()
 	return head_->data;
 }
 
-LimitedArrayQueue::LimitedArrayQueue() : capacity_(5000), size_(0), shift_(0)
+template <typename T>
+LimitedArrayQueue<T>::LimitedArrayQueue() : capacity_(5000), size_(0), shift_(0)
 {
-	arr_.resize(5000, 0);
+	arr_.resize(5000, T(0));
 }
-LimitedArrayQueue::LimitedArrayQueue(const int size) : capacity_(size), size_(0), shift_(0)
+template <typename T>
+LimitedArrayQueue<T>::LimitedArrayQueue(const int size) : capacity_(size), size_(0), shift_(0)
 {
-	arr_.resize(size, 0);
+	arr_.resize(size, T(0));
 }
-LimitedArrayQueue::LimitedArrayQueue(const int size, const int value) : capacity_(size), size_(size), shift_(0)
+template <typename T>
+LimitedArrayQueue<T>::LimitedArrayQueue(const int size, const T value) : capacity_(size), size_(size), shift_(0)
 {
 	arr_.resize(size, value);
 }
-LimitedArrayQueue::LimitedArrayQueue(const LimitedArrayQueue& other) : capacity_(other.capacity_), size_(other.size_), shift_(0)
+template <typename T>
+LimitedArrayQueue<T>::LimitedArrayQueue(const LimitedArrayQueue<T>& other) : capacity_(other.capacity_), size_(other.size_), shift_(0)
 {
 	if (other.shift_ == 0)
 		arr_ = other.arr_;
@@ -362,7 +412,8 @@ LimitedArrayQueue::LimitedArrayQueue(const LimitedArrayQueue& other) : capacity_
 		}
 	}
 }
-LimitedArrayQueue::LimitedArrayQueue(LimitedArrayQueue&& other) noexcept
+template <typename T>
+LimitedArrayQueue<T>::LimitedArrayQueue(LimitedArrayQueue<T>&& other) noexcept
 {
 	swap(arr_, other.arr_);
 	capacity_ = other.capacity_;
@@ -372,7 +423,8 @@ LimitedArrayQueue::LimitedArrayQueue(LimitedArrayQueue&& other) noexcept
 	shift_ = other.shift_;
 	other.shift_ = NULL;
 }
-LimitedArrayQueue& LimitedArrayQueue::operator= (const LimitedArrayQueue& other)
+template <typename T>
+LimitedArrayQueue<T>& LimitedArrayQueue<T>::operator= (const LimitedArrayQueue<T>& other)
 {
 	if (this != &other)
 	{
@@ -390,7 +442,8 @@ LimitedArrayQueue& LimitedArrayQueue::operator= (const LimitedArrayQueue& other)
 	}
 	return *this;
 }
-LimitedArrayQueue& LimitedArrayQueue::operator= (LimitedArrayQueue&& other) noexcept
+template <typename T>
+LimitedArrayQueue<T>& LimitedArrayQueue<T>::operator= (LimitedArrayQueue<T>&& other) noexcept
 {
 	if (this != &other)
 	{
@@ -405,16 +458,20 @@ LimitedArrayQueue& LimitedArrayQueue::operator= (LimitedArrayQueue&& other) noex
 	}
 	return *this;
 }
-LimitedArrayQueue::~LimitedArrayQueue() {};
-bool LimitedArrayQueue::IsEmpty() const
+template <typename T>
+LimitedArrayQueue<T>::~LimitedArrayQueue() {};
+template <typename T>
+bool LimitedArrayQueue<T>::IsEmpty() const
 {
 	return size_ == 0;
 }
-int LimitedArrayQueue::Size() const
+template <typename T>
+int LimitedArrayQueue<T>::Size() const
 {
 	return size_;
 }
-void LimitedArrayQueue::Resize(int size)
+template <typename T>
+void LimitedArrayQueue<T>::Resize(int size)
 {
 	size_ = size;
 	if (shift_ != 0)
@@ -428,7 +485,8 @@ void LimitedArrayQueue::Resize(int size)
 	capacity_ = size_;
 	arr_.resize(size_);
 }
-void LimitedArrayQueue::Reserve(int size)
+template <typename T>
+void LimitedArrayQueue<T>::Reserve(int size)
 {
 	if (size < size_)
 	{
@@ -445,12 +503,14 @@ void LimitedArrayQueue::Reserve(int size)
 	capacity_ = size;
 	arr_.resize(capacity_);
 }
-void LimitedArrayQueue::PushBack(const int value)
+template <typename T>
+void LimitedArrayQueue<T>::PushBack(const T value)
 {
 	arr_[size_ + shift_] = value;
 	size_++;
 }
-void LimitedArrayQueue::PopFront()
+template <typename T>
+void LimitedArrayQueue<T>::PopFront()
 {
 	if (IsEmpty())
 	{
@@ -459,7 +519,8 @@ void LimitedArrayQueue::PopFront()
 	size_--;
 	shift_++;
 }
-int LimitedArrayQueue::Front() const
+template <typename T>
+T LimitedArrayQueue<T>::Front() const
 {
 	if (IsEmpty())
 	{
@@ -467,7 +528,8 @@ int LimitedArrayQueue::Front() const
 	}
 	return arr_[shift_ % capacity_];
 }
-int& LimitedArrayQueue::Front()
+template <typename T>
+T& LimitedArrayQueue<T>::Front()
 {
 	if (IsEmpty())
 	{
@@ -476,19 +538,23 @@ int& LimitedArrayQueue::Front()
 	return arr_[shift_ % capacity_];
 }
 
-Node::Node() : data(0), next(nullptr), previous(nullptr) {}
-Node::Node(const int value) : data(value), next(nullptr), previous(nullptr) {}
+template <typename T>
+Node<T>::Node() : data(T(0)), next(nullptr), previous(nullptr) {}
+template <typename T>
+Node<T>::Node(const T value) : data(value), next(nullptr), previous(nullptr) {}
 
-ListQueue::ListQueue() : head_(nullptr), tail_(nullptr) {}
-ListQueue::ListQueue(int size)
+template <typename T>
+ListQueue<T>::ListQueue() : head_(nullptr), tail_(nullptr) {}
+template <typename T>
+ListQueue<T>::ListQueue(int size)
 {
 	if (size != 0)
 	{
-		head_ = new Node;
+		head_ = new Node<T>;
 		tail_ = head_;
 		for (auto i = head_, tail_ = head_; (size - 1); size--, i = i->next)
 		{
-			i->next = new Node;
+			i->next = new Node<T>;
 			i->next->previous = i;
 			tail_ = i;
 		}
@@ -499,15 +565,16 @@ ListQueue::ListQueue(int size)
 		tail_ = nullptr;
 	}
 }
-ListQueue::ListQueue(int size, int value)
+template <typename T>
+ListQueue<T>::ListQueue(int size, T value)
 {
 	if (size != 0)
 	{
-		head_ = new Node(value);
+		head_ = new Node<T>(value);
 		tail_ = head_;
 		for (auto i = head_, tail_ = head_; (size - 1); size--, i = i->next)
 		{
-			i->next = new Node(value);
+			i->next = new Node<T>(value);
 			i->next->previous = i;
 			tail_ = i;
 		}
@@ -518,15 +585,16 @@ ListQueue::ListQueue(int size, int value)
 		tail_ = nullptr;
 	}
 }
-ListQueue::ListQueue(const ListQueue& other)
+template <typename T>
+ListQueue<T>::ListQueue(const ListQueue& other)
 {
 	if (!other.IsEmpty())
 	{
-		head_ = new Node(other.Front());
+		head_ = new Node<T>(other.Front());
 		tail_ = head_;
 		for (auto i = head_, j = other.head_; j->next != nullptr; i = i->next, j = j->next)
 		{
-			i->next = new Node(j->next->data);
+			i->next = new Node<T>(j->next->data);
 			i->next->previous = i;
 			tail_ = i->next;
 		}
@@ -537,29 +605,31 @@ ListQueue::ListQueue(const ListQueue& other)
 		tail_ = nullptr;
 	}
 }
-ListQueue::ListQueue(ListQueue&& other) noexcept
+template <typename T>
+ListQueue<T>::ListQueue(ListQueue<T>&& other) noexcept
 {
 	head_ = other.head_;
 	other.head_ = nullptr;
 	tail_ = other.tail_;
 	other.tail_ = nullptr;
 }
-ListQueue& ListQueue::operator= (const ListQueue& other)
+template <typename T>
+ListQueue<T>& ListQueue<T>::operator= (const ListQueue<T>& other)
 {
 	if (this != &other)
 	{
 		while (!IsEmpty())
 		{
 			PopFront();
-			head_ = nullptr;
-			tail_ = nullptr;
 		}
+		head_ = nullptr;
+		tail_ = nullptr;
 		if (!other.IsEmpty())
 		{
-			head_ = new Node(other.head_->data);
+			head_ = new Node<T>(other.head_->data);
 			for (auto i = head_, j = other.head_; j->next != nullptr; i = i->next, j = j->next)
 			{
-				i->next = new Node(j->next->data);
+				i->next = new Node<T>(j->next->data);
 				i->next->previous = i;
 				tail_ = i->next;
 			}
@@ -567,16 +637,17 @@ ListQueue& ListQueue::operator= (const ListQueue& other)
 	}
 	return *this;
 }
-ListQueue& ListQueue::operator= (ListQueue&& other) noexcept
+template <typename T>
+ListQueue<T>& ListQueue<T>::operator= (ListQueue<T>&& other) noexcept
 {
 	if (this != &other)
 	{
 		while (!IsEmpty())
 		{
 			PopFront();
-			head_ = nullptr;
-			tail_ = nullptr;
 		}
+		head_ = nullptr;
+		tail_ = nullptr;
 		head_ = other.head_;
 		tail_ = other.tail_;
 		other.head_ = nullptr;
@@ -584,18 +655,21 @@ ListQueue& ListQueue::operator= (ListQueue&& other) noexcept
 	}
 	return *this;
 }
-ListQueue::~ListQueue()
+template <typename T>
+ListQueue<T>::~ListQueue()
 {
 	while (!IsEmpty())
 	{
 		PopFront();
 	}
 }
-bool ListQueue::IsEmpty() const
+template <typename T>
+bool ListQueue<T>::IsEmpty() const
 {
 	return head_ == nullptr;
 }
-int ListQueue::Size() const
+template <typename T>
+int ListQueue<T>::Size() const
 {
 	if (IsEmpty())
 		return 0;
@@ -603,20 +677,22 @@ int ListQueue::Size() const
 	for (auto i = head_; i != tail_; i = i->next, size++);
 	return size;
 }
-void ListQueue::PushBack(const int value)
+template <typename T>
+void ListQueue<T>::PushBack(const T value)
 {
 	if (IsEmpty())
 	{
-		tail_ = new Node(value);
+		tail_ = new Node<T>(value);
 		head_ = tail_;
 		return;
 	}
-	Node* push = new Node(value);
+	Node* push = new Node<T>(value);
 	push->previous = tail_;
 	tail_->next = push;
 	tail_ = push;
 }
-void ListQueue::PopFront()
+template <typename T>
+void ListQueue<T>::PopFront()
 {
 	if (IsEmpty())
 	{
@@ -626,7 +702,8 @@ void ListQueue::PopFront()
 	head_ = head_->next;
 	delete pop;
 }
-int ListQueue::Front() const
+template <typename T>
+T ListQueue<T>::Front() const
 {
 	if (IsEmpty())
 	{
@@ -634,7 +711,8 @@ int ListQueue::Front() const
 	}
 	return head_->data;
 }
-int& ListQueue::Front()
+template <typename T>
+T& ListQueue<T>::Front()
 {
 	if (IsEmpty())
 	{

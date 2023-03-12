@@ -5,11 +5,11 @@ using namespace std;
 
 int main()
 {
-	ListQueue A(2, 5);
-	AbstractContainer* B = &A;
-	ListQueue C(A);
-	ListQueue D;
-	ListQueue E(D);
+	ListQueue<int> A(2, 5);
+	AbstractContainer<int>* B = &A;
+	ListQueue<int> C(A);
+	ListQueue<int> D;
+	ListQueue<int> E(D);
 	E.PushBack(5);
 	cout << E.Front() << '\n';
 	C.PushBack(3);
@@ -36,8 +36,8 @@ int main()
 		C.PopFront();
 	}
 	cout << "\n";
-	LimitedArrayStack a = LimitedArrayStack(5, 5);
-	LimitedArrayStack a2 = move(a);
+	LimitedArrayStack<int> a = LimitedArrayStack<int>(5, 5);
+	LimitedArrayStack<int> a2 = move(a);
 	while (!a.IsEmpty())
 	{
 		cout << a.Top() << " ";
@@ -50,8 +50,8 @@ int main()
 		a2.Pop();
 	}
 	cout << "\n";
-	LimitedArrayQueue b = LimitedArrayQueue(5, 7);
-	LimitedArrayQueue b2 = move(b);
+	LimitedArrayQueue<int> b = LimitedArrayQueue<int>(5, 7);
+	LimitedArrayQueue<int> b2 = move(b);
 	while (!b.IsEmpty())
 	{
 		cout << b.Front() << " ";
@@ -64,8 +64,8 @@ int main()
 		b2.PopFront();
 	}
 	cout << "\n";
-	UnlimitedArrayStack c = UnlimitedArrayStack(5, 8);
-	UnlimitedArrayStack c2 = move(c);
+	UnlimitedArrayStack<int> c = UnlimitedArrayStack<int>(5, 8);
+	UnlimitedArrayStack<int> c2 = move(c);
 	while (!c.IsEmpty())
 	{
 		cout << c.Top() << " ";
@@ -78,8 +78,8 @@ int main()
 		c2.Pop();
 	}
 	cout << "\n";
-	ListStack d = ListStack(5, 9);
-	ListStack d2 = move(d);
+	ListStack<int> d = ListStack<int>(5, 9);
+	ListStack<int> d2 = move(d);
 	while (!d.IsEmpty())
 	{
 		cout << d.Top() << " ";
@@ -92,8 +92,8 @@ int main()
 		d2.Pop();
 	}
 	cout << "\n";
-	ListQueue e = ListQueue(5, 6);
-	ListQueue e2 = move(e);
+	ListQueue<int> e = ListQueue<int>(5, 6);
+	ListQueue<int> e2 = move(e);
 	while (!e.IsEmpty())
 	{
 		cout << e.Front() << " ";

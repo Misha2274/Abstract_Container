@@ -6,6 +6,7 @@
 
 using namespace std;
 
+template <typename T>
 class AbstractContainer
 {
 
@@ -16,31 +17,33 @@ public:
 
 };
 
-class AbstractStack : public AbstractContainer
+template <typename T>
+class AbstractStack : public AbstractContainer<T>
 {
 
 public:
 
-	virtual void Push(const int value) = 0;
+	virtual void Push(const T value) = 0;
 	virtual void Pop() = 0;
-	virtual int Top() const = 0;
-	virtual int& Top() = 0;
+	virtual T Top() const = 0;
+	virtual T& Top() = 0;
 
 };
 
-class LimitedArrayStack : public AbstractStack
+template <typename T>
+class LimitedArrayStack : public AbstractStack<T>
 {
 
 	int capacity_;
 	int size_;
-	int* arr_;
+	T* arr_;
 
 	LimitedArrayStack();
 
 public:
 
 	LimitedArrayStack(const int size);
-	LimitedArrayStack(const int size, const int value);
+	LimitedArrayStack(const int size, const T value);
 	LimitedArrayStack(const LimitedArrayStack& other);
 	LimitedArrayStack(LimitedArrayStack&& other) noexcept;
 	LimitedArrayStack& operator= (const LimitedArrayStack& other);
@@ -49,23 +52,24 @@ public:
 	bool IsEmpty() const override;
 	int Size() const override;
 	void Resize(int size);
-	void Push(const int value) override;
+	void Push(const T value) override;
 	void Pop() override;
-	int Top() const override;
-	int& Top() override;
+	T Top() const override;
+	T& Top() override;
 
 };
 
-class UnlimitedArrayStack : public AbstractStack
+template <typename T>
+class UnlimitedArrayStack : public AbstractStack<T>
 {
 
-	vector<int> arr_;
+	vector<T> arr_;
 
 public:
 
 	UnlimitedArrayStack();
 	UnlimitedArrayStack(const int size);
-	UnlimitedArrayStack(const int size, const int value);
+	UnlimitedArrayStack(const int size, const T value);
 	UnlimitedArrayStack(const UnlimitedArrayStack& other);
 	UnlimitedArrayStack(UnlimitedArrayStack&& other) noexcept;
 	UnlimitedArrayStack& operator= (const UnlimitedArrayStack& other);
@@ -74,24 +78,26 @@ public:
 	bool IsEmpty() const override;
 	int Size() const override;
 	void Resize(int size);
-	void Push(const int value) override;
+	void Push(const T value) override;
 	void Pop() override;
-	int Top() const override;
-	int& Top() override;
+	T Top() const override;
+	T& Top() override;
 
 };
 
+template <typename T>
 struct ForwardNode
 {
 
-	int data;
+	T data;
 	ForwardNode* next;
 	ForwardNode();
-	ForwardNode(const int value);
+	ForwardNode(const T value);
 
 };
 
-class ListStack : public AbstractStack
+template <typename T>
+class ListStack : public AbstractStack<T>
 {
 
 	ForwardNode* head_;
@@ -100,7 +106,7 @@ public:
 
 	ListStack();
 	ListStack(int size);
-	ListStack(int size, int value);
+	ListStack(int size, T value);
 	ListStack(const ListStack& other);
 	ListStack(ListStack&& other) noexcept;
 	ListStack& operator= (const ListStack& other);
@@ -108,28 +114,30 @@ public:
 	~ListStack();
 	bool IsEmpty() const override;
 	int Size() const override;
-	void Push(const int value) override;
+	void Push(const T value) override;
 	void Pop() override;
-	int Top() const override;
-	int& Top() override;
+	T Top() const override;
+	T& Top() override;
 };
 
-class AbstractQueue : public AbstractContainer
+template <typename T>
+class AbstractQueue : public AbstractContainer<T>
 {
 
 public:
 
-	virtual void PushBack(const int value) = 0;
+	virtual void PushBack(const T value) = 0;
 	virtual void PopFront() = 0;
-	virtual int Front() const = 0;
-	virtual int& Front() = 0;
+	virtual T Front() const = 0;
+	virtual T& Front() = 0;
 
 };
 
-class LimitedArrayQueue : public AbstractQueue
+template <typename T>
+class LimitedArrayQueue : public AbstractQueue<T>
 {
 
-	vector<int> arr_;
+	vector<T> arr_;
 	int capacity_;
 	int size_;
 	int shift_;
@@ -138,7 +146,7 @@ class LimitedArrayQueue : public AbstractQueue
 public:
 
 	LimitedArrayQueue(const int size);
-	LimitedArrayQueue(const int size, const int value);
+	LimitedArrayQueue(const int size, const T value);
 	LimitedArrayQueue(const LimitedArrayQueue& other);
 	LimitedArrayQueue(LimitedArrayQueue&& other) noexcept;
 	LimitedArrayQueue& operator= (const LimitedArrayQueue& other);
@@ -148,24 +156,26 @@ public:
 	int Size() const override;
 	void Resize(int size);
 	void Reserve(int size);
-	void PushBack(const int value) override;
+	void PushBack(const T value) override;
 	void PopFront() override;
-	int Front() const override;
-	int& Front() override;
+	T Front() const override;
+	T& Front() override;
 
 };
 
+template <typename T>
 struct Node
 {
 
-	int data;
+	T data;
 	Node* next, * previous;
 	Node();
-	Node(const int value);
+	Node(const T value);
 
 };
 
-class ListQueue : public AbstractQueue
+template <typename T>
+class ListQueue : public AbstractQueue<T>
 {
 
 	Node* head_, * tail_;
@@ -174,7 +184,7 @@ public:
 
 	ListQueue();
 	ListQueue(int size);
-	ListQueue(int size, int value);
+	ListQueue(int size, T value);
 	ListQueue(const ListQueue& other);
 	ListQueue(ListQueue&& other) noexcept;
 	ListQueue& operator= (const ListQueue& other);
@@ -182,9 +192,9 @@ public:
 	~ListQueue();
 	bool IsEmpty() const override;
 	int Size() const override;
-	void PushBack(const int value) override;
+	void PushBack(const T value) override;
 	void PopFront() override;
-	int Front() const override;
-	int& Front() override;
+	T Front() const override;
+	T& Front() override;
 
 };
